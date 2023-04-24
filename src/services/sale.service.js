@@ -1,5 +1,5 @@
 const { getUserById } = require('./user.service');
-const connection = require('../connection/connection');
+const connection = require('../connections/connection');
 
 async function registerNewSale(saleFromReq) {
   const { products, ...saleWithoutProducts } = saleFromReq;

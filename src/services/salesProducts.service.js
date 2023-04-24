@@ -1,4 +1,4 @@
-const connection = require('../connection/connection');
+const connection = require('../connections/connection');
 
 async function findProductsQuantity(id) {
   const query = `

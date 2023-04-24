@@ -1,7 +1,7 @@
 const ExceptionWithErrorCode = require('../error/ExceptionWithErrorCode');
 const { comparePasswords, hashPassword } = require('../utils/crypto');
 const { generateToken } = require('../utils/jwt');
-const connection = require('../connection/connection');
+const connection = require('../connections/connection');
 
 function validateLoginAttempt(userFromReq, userFromDB) {
   if (!userFromDB) {
