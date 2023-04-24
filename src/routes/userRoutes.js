@@ -1,4 +1,4 @@
-const express = require('express');
+const { Router } = require('express');
 const { 
   requestLogin, 
   requestUserRegistration, 
@@ -7,11 +7,11 @@ const {
 } = require('../controllers/userControllers');
 const validateUserAlreadyExists = require('../middlewares/userAlready');
 
-const router = express.Router();
+const userRouter = Router();
 
-router.post('/login', requestLogin);
-router.post('/register', validateUserAlreadyExists, requestUserRegistration);
-router.get('/id/:id', requestUserById);
-router.get('/:role', requestAllUserByRole);
+userRouter.post('/login', requestLogin);
+userRouter.post('/register', validateUserAlreadyExists, requestUserRegistration);
+userRouter.get('/id/:id', requestUserById);
+userRouter.get('/:role', requestAllUserByRole);
 
-module.exports = router;
+module.exports = userRouter;

@@ -7,7 +7,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 
-const { userRouter, productRouter, saleRouter, adminRouter } = require('./routes');
+const { productRouter, saleRouter, adminRouter } = require('./routes');
+const userRouter = require('./routes/userRoutes');
 
 app.use('/images', express.static(`${__dirname}/images`));
 
@@ -17,7 +18,7 @@ app.use(cors({
   origin: 'http://localhost:3000',
 }));
 
-app.use('/user', userRouter);
+app.use('/', userRouter);
 app.use('/product', productRouter);
 app.use('/sale', saleRouter);
 app.use('/admin', adminRouter);
