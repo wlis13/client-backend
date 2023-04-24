@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
-const fs = require('fs');
+dotenv.config();
 
-const secret = fs.readFileSync('jwt.evaluation.key').toString();
+const secret = process.env.SECRET;
 
 async function generateToken(payload) {
   const token = jwt.sign({ ...payload }, secret, { algorithm: 'HS256' });

@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
+const dotenv = require('dotenv');
 
-const secret = fs.readFileSync('jwt.evaluation.key').toString();
+dotenv.config();
+
+const secret = process.env.SECRET;
 
 async function adminGuard(req, res, next) {
     const user = jwt.verify(req.headers.authorization, secret).dataValues;
