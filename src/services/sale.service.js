@@ -43,7 +43,7 @@ async function allSaleService(id) {
   const user = await getUserById(id);
 
   if (user.role === 'seller') {
-    const [result] = await connection.execute('SELECT * FROM sale WHERE id = ?', [id]);
+    const [result] = await connection.execute('SELECT * FROM sales WHERE id = ?', [id]);
     return result;
   } 
   const [rows] = await connection.execute(

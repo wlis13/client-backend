@@ -17,7 +17,7 @@ function validateLoginAttempt(userFromReq, userFromDB) {
 
 async function loginUser(userFromReq) {
   const userFromDB = await connection.execute(
-'SELECT * FROM Users WHERE email = ?',
+'SELECT * FROM users WHERE email = ?',
   [userFromReq.email],
 );
 
@@ -31,7 +31,7 @@ async function loginUser(userFromReq) {
 
 async function validateUserAlreadyExists(userFromReq) {
   const user = await connection.execute(
-'SELECT * FROM Users WHERE email = ? OR name = ?',
+'SELECT * FROM users WHERE email = ? OR name = ?',
   [userFromReq.email, userFromReq.name],
 );
   if (user) {
@@ -43,7 +43,7 @@ async function registerNewUser(userFromReq) {
   await validateUserAlreadyExists(userFromReq);
   const { name, email, role } = userFromReq;
   const passwordHash = hashPassword(userFromReq.password);
-  const createdUser = await connection.execute(`INSERT INTO Users(name, email, password, role)
+  const createdUser = await connection.execute(`INSERT INTO users(name, email, password, role)
   VALUES
   (?,?,?,?)`, [
     name, email, passwordHash, role,
@@ -53,7 +53,7 @@ async function registerNewUser(userFromReq) {
 
 async function getAllUserByRole(role) {
   const [rows] = await connection.execute(
-    'SELECT * FROM Users WHERE role = ?',
+    'SELECT * FROM users WHERE role = ?',
     [role],
   );
 
@@ -68,7 +68,7 @@ async function getAllUserByRole(role) {
 }
 
 async function getUserById(id) {
-  const user = await connection.execute('SELECT * FROM Users WHERE id = ?', [id]);
+  const user = await connection.execute('SELECT * FROM users WHERE id = ?', [id]);
   return user;
 }
 
