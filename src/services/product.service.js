@@ -1,7 +1,7 @@
-const { Product } = require('../../database/models');
+const connection = require('../connection/connection');
 
 async function getAll() {
- const result = await Product.findAll();
+ const [result] = await connection.execute('SELECT * FROM Products');
  return result;
 }
 
