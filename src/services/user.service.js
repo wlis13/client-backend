@@ -41,12 +41,12 @@ async function validateUserAlreadyExists(userFromReq) {
 
 async function registerNewUser(userFromReq) {
   await validateUserAlreadyExists(userFromReq);
-  const { name, email, role } = userFromReq;
-  const passwordHash = hashPassword(userFromReq.password);
+  const { name, email, password, role } = userFromReq;
+  // const passwordHash = hashPassword(password);
   const createdUser = await connection.execute(`INSERT INTO users(name, email, password, role)
   VALUES
   (?,?,?,?)`, [
-    name, email, passwordHash, role,
+    name, email, password, role,
   ]);
   return createdUser;
 }
