@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const handleError = require('./middlewares/errorHandler');
 require('express-async-errors');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 
 const { userRouter, productRouter, saleRouter, adminRouter } = require('./routes');
