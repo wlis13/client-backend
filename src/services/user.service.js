@@ -40,10 +40,9 @@ async function validateUserAlreadyExists(userFromReq) {
 }
 
 async function registerNewUser(userFromReq) {
-  await validateUserAlreadyExists(userFromReq);
   const { name, email, password, role } = userFromReq;
   const passwordHash = hashPassword(password);
-  const createdUser = await connection.execute(`INSERT INTO db_client_amostra.users(name, email, password, role)
+  const createdUser = await connection.execute(`INSERT INTO users(name, email, password, role)
   VALUES
   (?,?,?,?)`, [
     name, email, passwordHash, role,
