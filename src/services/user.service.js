@@ -1,60 +1,37 @@
-const ExceptionWithErrorCode = require('../error/ExceptionWithErrorCode');
-const { comparePasswords, hashPassword } = require('../utils/crypto');
 const { generateToken } = require('../utils/jwt');
-const connection = require('../connections/connection');
+const path = require('path');
+const fs = require('fs/promises');
+const { hashPassword } = require('../utils/crypto');
 
-function validateLoginAttempt(userFromReq, userFromDB) {
-  if (!userFromDB) {
-    throw new ExceptionWithErrorCode(404, 'User not Found');
-  }
+const PATH_USERS = "../../database/users.json";
 
-  const passwordIsValid = comparePasswords(userFromReq.password, userFromDB.password);
-
-  if (!passwordIsValid) {
-    throw new ExceptionWithErrorCode(400, 'Invalid User');
-  }
+async function loginUserService(userFromReq) {
+  const fileUsers = path.join(__dirname, PATH_USERS);
+  const dataUsers = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
+  const getUser = dataUsers.find((user) => user.email === userFromReq.email);
+  if (getUser) {
+    const token = await generateToken(getUser);
+    delete getUser.password;
+    return { ...getUser, token };
+  } else { return false }
 }
 
-async function loginUser(userFromReq) {
-  const userFromDB = await connection.execute(
-'SELECT * FROM users WHERE email = ?',
-  [userFromReq.email],
-);
-
-  validateLoginAttempt(userFromReq, userFromDB);
-
-  const token = await generateToken(userFromDB);
-  const user = userFromDB.dataValues;
-  delete user.password;
-  return { ...user, token };
-}
-
-async function validateUserAlreadyExists(userFromReq) {
-  const user = await connection.execute(
-'SELECT * FROM users WHERE email = ? OR name = ?',
-  [userFromReq.email, userFromReq.name],
-);
-  if (user) {
-    throw new ExceptionWithErrorCode(409, 'User already exists');
-  }
-}
-
-async function registerNewUser(userFromReq) {
-  const { name, email, password, role } = userFromReq;
+async function registerUserService(userFromReq) {
+  const { password } = userFromReq;
   const passwordHash = hashPassword(password);
-  const createdUser = await connection.execute(`INSERT INTO users(name, email, password, role)
-  VALUES
-  (?,?,?,?)`, [
-    name, email, passwordHash, role,
-  ]);
-  return createdUser;
+  const fileUsers = path.join(__dirname, PATH_USERS);
+  const createdUser = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
+  const id = createdUser.length + 1
+  createdUser.push({ id, ...userFromReq, password_hash: passwordHash });
+  await fs.writeFile(fileUsers, JSON
+    .stringify(createdUser));
+  return createdUser.find((user) => user.email === userFromReq.email);
 }
 
 async function getAllUserByRole(role) {
-  const [rows] = await connection.execute(
-    'SELECT * FROM users WHERE role = ?',
-    [role],
-  );
+  const fileUsers = path.join(__dirname, PATH_USERS);
+  const createdUser = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
+  const rows = createdUser.filter((user) => user.role === role);
 
   const userList = rows.map((row) => ({
     id: row.id,
@@ -66,14 +43,16 @@ async function getAllUserByRole(role) {
   return userList;
 }
 
-async function getUserById(id) {
-  const user = await connection.execute('SELECT * FROM users WHERE id = ?', [id]);
-  return user;
+async function getUserByIdService(id) {
+  const filePath = path.join(__dirname, PATH_USERS);
+  const getUsers = JSON.parse(await fs.readFile(filePath, "utf-8"));
+  const userById = getUsers.find((user) => user.id === Number(id));
+  return userById;
 }
 
 module.exports = {
-  loginUser,
-  registerNewUser,
+  loginUserService,
+  registerUserService,
   getAllUserByRole,
-  getUserById,
+  getUserByIdService,
 };

@@ -1,38 +1,37 @@
-const { 
-  loginUser, 
-  registerNewUser, 
-  getAllUserByRole, 
-  getUserById,
- } = require('../services/user.service');
+const {
+  getAllUserByRole,
+  loginUserService,
+  registerUserService,
+  getUserByIdService,
+} = require('../services/user.service');
 
-async function requestLogin(req, res) {
+async function loginContoller(req, res) {
   const userFromReq = req.body;
-  const token = await loginUser(userFromReq);
+  const token = await loginUserService(userFromReq);
   return res.status(200).json(token);
 }
 
-async function requestUserRegistration(req, res) {
+async function userRegisterController(req, res) {
   const userToRegister = req.body;
-  const createdUser = await registerNewUser(userToRegister);
+  const createdUser = await registerUserService(userToRegister);
   return res.status(201).json(createdUser);
 }
 
-async function requestAllUserByRole(req, res) {
+async function allUserByRoleController(req, res) {
   const { role } = req.params;
-
   const sellerList = await getAllUserByRole(role);
   return res.status(200).json(sellerList);
 }
 
-async function requestUserById(req, res) {
+async function userByIdController(req, res) {
   const { id } = req.params;
-  const user = await getUserById(id);
+  const user = await getUserByIdService(id);
   return res.status(200).json(user);
 }
 
 module.exports = {
-  requestLogin,
-  requestUserRegistration,
-  requestAllUserByRole,
-  requestUserById,
+  loginContoller,
+  userRegisterController,
+  allUserByRoleController,
+  userByIdController,
 };

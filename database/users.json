@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "first user",
+    "email": "first@gmail.com",
+    "password": "thirth_password",
+    "password_hash": "b439ac2afbf9901f45f53199e9b64039",
+    "role": "consumer"
+  },
+  {
+    "id": 2,
+    "name": "second user",
+    "email": "second@gmail.com",
+    "password": "second_password",
+    "password_hash": "5853e58d7c5f0c0901abeccf300a1cbe",
+    "role": "consumer"
+  },
+  {
+    "id": 3,
+    "name": "wlisses",
+    "email": "wlisses@gmail.com",
+    "password": "admin_password",
+    "role": "admin",
+    "password_hash": "dc3565645d8002becb5fd7977aeef3e1"
+  }
+]
