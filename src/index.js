@@ -10,7 +10,7 @@ const app = express();
 app.use('/images', express.static(`${__dirname}/images`));
 
 const corsOptions = {
-  origin: 'http://127.0.0.1:3000',
+  origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT']
 };
 
