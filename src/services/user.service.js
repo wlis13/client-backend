@@ -11,8 +11,7 @@ async function loginUserService(userFromReq) {
   const getUser = dataUsers.find((user) => user.email === userFromReq.email);
   if (getUser) {
     const token = await generateToken(getUser);
-    // const getUserJson = JSON.stringify(getUser);
-    return JSON.stringify({ ...getUser, token });
+    return  token;
   } else { return false }
 }
 
