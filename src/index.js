@@ -16,6 +16,9 @@ app.use(express.json());
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);
+app.get("/test-cors", (_req, res) => {
+  res.status(200).json({ message: "cors do amor" });
+})
 // app.use('/', saleRouter);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
