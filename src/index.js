@@ -7,21 +7,12 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-app.use('/images', express.static(`${__dirname}/images`));
-
 const corsOptions = {
   origin: 'http://localhost:3000',
   methods: ['GET', 'POST', 'PUT']
 };
-
 app.use(cors(corsOptions));
-
-app.use(function(_req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Headers", "x-custom-header");
-  next();
-});
-
+app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
 
 app.use('/', userRouter);
