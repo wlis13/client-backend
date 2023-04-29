@@ -15,6 +15,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(function(_req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
 app.use(express.json());
 
 app.use('/', userRouter);
