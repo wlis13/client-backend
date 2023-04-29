@@ -7,11 +7,10 @@ const cors = require('cors');
 dotenv.config();
 const app = express();
 
-const corsOptions = {
+app.use(cors({
   origin: 'http://localhost:3000',
-  methods: ['GET', 'POST', 'PUT']
-};
-app.use(cors(corsOptions));
+}));
+
 app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
 
