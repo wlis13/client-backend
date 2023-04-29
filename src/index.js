@@ -14,7 +14,7 @@ app.use(cors({
 app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
 
-app.use('/', userRouter);
+app.use('/login', userRouter);
 app.use('/', productsRoutes);
 // app.use('/', saleRouter);
 // app.use('/', adminRouter);
