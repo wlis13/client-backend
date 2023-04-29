@@ -9,10 +9,8 @@ async function loginUserService(userFromReq) {
   const fileUsers = path.join(__dirname, PATH_USERS);
   const dataUsers = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
   const getUser = dataUsers.find((user) => user.email === userFromReq.email);
-  if (getUser) {
-    const token = await generateToken(getUser);
-    return  token;
-  } else { return false }
+  const token = await generateToken(getUser);
+  return  token;
 }
 
 async function registerUserService(userFromReq) {
