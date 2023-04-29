@@ -10,7 +10,9 @@ const app = express();
 app.use('/images', express.static(`${__dirname}/images`));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);
