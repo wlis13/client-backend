@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const { userRouter } = require('./routes/user.routes');
 const { productsRoutes } = require('./routes/products.routes');
+const cors = require('cors');
 
 dotenv.config();
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 app.use('/images', express.static(`${__dirname}/images`));
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);
