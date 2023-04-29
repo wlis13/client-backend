@@ -8,7 +8,7 @@ const {
 async function loginContoller(req, res) {
   const userFromReq = req.body;
   const token = await loginUserService(userFromReq);
-  return res.status(200).json(token);
+  return res.status(200).json({ message: "meu ovo" });
 }
 
 async function userRegisterController(req, res) {
