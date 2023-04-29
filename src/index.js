@@ -7,7 +7,7 @@ const { productsRoutes } = require('./routes/products.routes');
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: "localhost:3000",
+  origin: "http://localhost:3000",
 }))
 // app.use(cors({
 //   origin: function(origin, callback) {
