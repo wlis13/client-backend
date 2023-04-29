@@ -9,22 +9,6 @@ const app = express();
 app.use(cors({
   origin: "http://localhost:3000",
 }))
-// app.use(cors({
-//   origin: function(origin, callback) {
-//     if (dominio.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   }
-// }));
-
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
-
 
 app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
