@@ -34,6 +34,8 @@ async function findProductsQuantity(id) {
   return results;
 }
 
-module.exports = findProductsQuantity;
+module.exports = {
+  findProductsQuantity,
+};
 
 // s.id, s.total_value, s.created_at, p.name, p.price, sp.quantity

@@ -1,15 +1,20 @@
 const { getUserById } = require('./user.service');
 const connection = require('../connections/connection');
+const path = require('path');
+const fs = require("fs/promises");
+
+const PATH_SALES = "../../database/sales.json";
+const PATH_USERS = "../../database/users.json";
 
 async function registerNewSale(saleFromReq) {
   const { products, ...saleWithoutProducts } = saleFromReq;
   const {
-    userId, 
-    sellerId, 
-    totalPrice, 
-    deliveryAddress, 
-    deliveryNumber, 
-    saleDate, 
+    userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
     status,
   } = saleWithoutProducts;
   const result = await connection.execute(
@@ -17,11 +22,11 @@ async function registerNewSale(saleFromReq) {
     delivery_number, sale_date, status) 
     VALUES (?, ?, ?, ?, ?, ?, ?)`,
     [
-      userId, 
-      sellerId, 
+      userId,
+      sellerId,
       totalPrice,
-      deliveryAddress, 
-      deliveryNumber, 
+      deliveryAddress,
+      deliveryNumber,
       saleDate,
       status
     ]
@@ -43,26 +48,32 @@ async function allSaleService(id) {
   const user = await getUserById(id);
 
   if (user.role === 'seller') {
-    const [result] = await connection.execute('SELECT * FROM sales WHERE id = ?', [id]);
-    return result;
-  } 
-  const [rows] = await connection.execute(
-    `SELECT sales.id, sales.user_id, sales.seller_id,
-    sales.total_price, sales.delivery_address, sales.delivery_number,
-    sales.sale_date, sales.status, users.name as userName
-    FROM sales
-    LEFT JOIN users ON sales.user_id = users.id
-    WHERE sales.user_id = ?`,
-    [id],
-  );
-  
-  return rows;
+    const pathSales = path.join(__dirname, PATH_SALES);
+    const dataSales = JSON.parse(await fs.readFile(pathSales, "utf-8"));
+    const getSalesById = dataSales.find((sale) => sale.id === Number(id));
+    return getSalesById;
+  } else {
+    const pathSales = path.join(__dirname, PATH_SALES);
+    const dataSales = JSON.parse(await fs.readFile(pathSales, "utf-8"));
+    const getSalesById = dataSales.find((sale) => sale.user_id === Number(id));
+
+    const pathUser = path.join(__dirname, PATH_USERS);
+    const dataUser = JSON.parse(await fs.readFile(pathUser, "utf-8"));
+    const getUser = dataUser.find((user) => user.id === getSalesById.id);
+    const { name } = getUser;
+    return { ...getSalesById, name };
+  }
 }
 
 async function updateState(status, id) {
-  const updateQuery = 'UPDATE sales SET status = ? WHERE id = ?';
-  const [rows] = await connection.execute(updateQuery, [status, id]);
-  return rows;
+  const pathSales = path.join(__dirname, PATH_SALES);
+  const dataSales = JSON.parse(await fs.readFile(pathSales, "utf-8"));
+  const getDataSales = dataSales.filter((sale) => {
+    if (sale.id === Number(id)) {
+      sale.status = status
+    }
+  });
+  await fs.writeFile(pathSales, JSON.stringify(getDataSales));
 }
 
 module.exports = {
