@@ -9,12 +9,8 @@ const app = express();
 
 app.use(cors({
   origin: 'http://localhost:3000',
+  optionsSuccessStatus : 200
 }));
-
-app.use((_req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  next();
-});
 
 app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
@@ -24,6 +20,9 @@ app.use('/', productsRoutes);
 // app.use('/', saleRouter);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
+app.get("/test", (_req, res) => {
+  res.status(200).json({ message: "test cors" });
+})
 
 const port = process.env.PORT;
 
