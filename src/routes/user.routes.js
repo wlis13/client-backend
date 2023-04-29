@@ -1,10 +1,17 @@
+const app = require("../index");
+const cors = require('cors');
 const { Router } = require('express');
+
 const {
   userRegisterController,
   loginContoller,
   allUserByRoleController,
   userByIdController,
 } = require('../controllers/userControllers');
+
+app.use(cors({
+  origin: 'http://localhost:3000',
+}));
 
 const userRouter = Router();
 

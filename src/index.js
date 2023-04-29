@@ -16,9 +16,6 @@ app.use(express.json());
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);
-app.get("/test-cors", (_req, res) => {
-  res.status(200).json({ message: "cors do amor" });
-})
 // app.use('/', saleRouter);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
@@ -27,3 +24,5 @@ const port = process.env.PORT;
 
 app.listen(port);
 console.log(`Api rodando na porta ${port}`);
+
+module.exports = app
