@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const { userRouter } = require('./routes/user.routes');
+const { productsRoutes } = require('./routes/products.routes');
 
 dotenv.config();
 const app = express();
@@ -10,7 +11,7 @@ app.use('/images', express.static(`${__dirname}/images`));
 app.use(express.json());
 
 app.use('/', userRouter);
-// app.use('/', productRouter);
+app.use('/', productsRoutes);
 // app.use('/', saleRouter);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
