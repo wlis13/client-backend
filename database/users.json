@@ -5,7 +5,7 @@
     "email": "first@gmail.com",
     "password": "thirth_password",
     "password_hash": "b439ac2afbf9901f45f53199e9b64039",
-    "role": "consumer"
+    "role": "customer"
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@
     "email": "second@gmail.com",
     "password": "second_password",
     "password_hash": "5853e58d7c5f0c0901abeccf300a1cbe",
-    "role": "consumer"
+    "role": "customer"
   },
   {
     "id": 3,
