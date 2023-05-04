@@ -2,7 +2,7 @@ const { getUserById } = require('./user.service');
 const path = require('path');
 const fs = require("fs/promises");
 
-const PATH_SALES = "../../database/sales.json";
+const PATH_SALES = "/database/sales.json";
 const PATH_USERS = "../../database/users.json";
 
 async function registerNewSale(saleFromReq) {
@@ -18,7 +18,7 @@ async function registerNewSale(saleFromReq) {
   } = saleWithoutProducts;
   
   // lê o arquivo de vendas
-  const fileSales = path.join(__dirname, 'sales.json');
+  const fileSales = path.join(__dirname, PATH_SALES);
   const dataSales = JSON.parse(await fs.promises.readFile(fileSales, 'utf-8'));
 
   // adiciona a nova venda no array de vendas
