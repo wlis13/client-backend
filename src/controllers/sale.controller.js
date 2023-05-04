@@ -1,6 +1,6 @@
 const { registerNewSale, allSaleService, updateState } = require('../services/sale.service');
 
-async function requestToRegisterNewSale(req, res) {
+async function registerNewSaleController(req, res) {
   const saleToRegister = req.body;
   const createdSale = await registerNewSale(saleToRegister);
   return res.status(201).json(createdSale);
@@ -20,7 +20,7 @@ async function updateSale(req, res) {
 }
 
 module.exports = {
-  requestToRegisterNewSale,
+  registerNewSaleController,
   allSaleController,
   updateSale,
 };

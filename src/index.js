@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { userRouter } = require('./routes/user.routes');
 const { productsRoutes } = require('./routes/products.routes');
+const { salesRoutes } = require('./routes/sales.routes');
 
 dotenv.config();
 const app = express();
@@ -15,7 +16,7 @@ app.use(express.json());
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);
-// app.use('/', saleRouter);
+app.use('/', salesRoutes);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
 

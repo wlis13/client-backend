@@ -1,10 +1,12 @@
 const { getUserById } = require('./user.service');
-const connection = require('../connections/connection');
 const path = require('path');
 const fs = require("fs/promises");
 
 const PATH_SALES = "../../database/sales.json";
 const PATH_USERS = "../../database/users.json";
+
+const fs = require('fs');
+const path = require('path');
 
 async function registerNewSale(saleFromReq) {
   const { products, ...saleWithoutProducts } = saleFromReq;
@@ -17,31 +19,31 @@ async function registerNewSale(saleFromReq) {
     saleDate,
     status,
   } = saleWithoutProducts;
-  const result = await connection.execute(
-    `INSERT INTO sales (user_id, seller_id, total_price, delivery_address, 
-    delivery_number, sale_date, status) 
-    VALUES (?, ?, ?, ?, ?, ?, ?)`,
-    [
-      userId,
-      sellerId,
-      totalPrice,
-      deliveryAddress,
-      deliveryNumber,
-      saleDate,
-      status
-    ]
-  );
-  const saleId = result.insertId;
+  
+  // lê o arquivo de vendas
+  const fileSales = path.join(__dirname, 'sales.json');
+  const dataSales = JSON.parse(await fs.promises.readFile(fileSales, 'utf-8'));
 
-  const salesProductsPromises = products.map(({ productId, quantity }) => {
-    const sql = 'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)';
-    const values = [saleId, productId, quantity];
-    return connection.execute(sql, values);
-  });
+  // adiciona a nova venda no array de vendas
+  const newSale = {
+    id: dataSales.length + 1, // gera o ID da nova venda
+    userId,
+    sellerId,
+    totalPrice,
+    deliveryAddress,
+    deliveryNumber,
+    saleDate,
+    status,
+    products,
+  };
+  dataSales.push(newSale);
 
-  await Promise.all(salesProductsPromises);
-  return result[0]; // retorna o resultado da inserção na tabela 'sales'
+  // escreve o conteúdo atualizado do arquivo de vendas
+  await fs.promises.writeFile(fileSales, JSON.stringify(dataSales));
+
+  return newSale; // retorna a nova venda adicionada
 }
+
 
 
 async function allSaleService(id) {

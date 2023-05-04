@@ -10,7 +10,9 @@ async function loginUserService(userFromReq) {
   const dataUsers = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
   const getUser = dataUsers.find((user) => user.email === userFromReq.email);
   const token = await generateToken(getUser);
+  if (getUser !== null) {
   return { ...getUser, token };
+  }
 }
 
 async function registerUserService(userFromReq) {
