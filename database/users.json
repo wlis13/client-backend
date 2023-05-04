@@ -22,5 +22,13 @@
     "password": "admin_password",
     "role": "admin",
     "password_hash": "dc3565645d8002becb5fd7977aeef3e1"
+  },
+  {
+    "id": 4,
+    "name": "fulana vendedora",
+    "email": "seller@gmail.com",
+    "password": "seller_password",
+    "password_hash": "5853e58d7c5f0c0901abeccf300a1cbe",
+    "role": "seller"
   }
 ]
