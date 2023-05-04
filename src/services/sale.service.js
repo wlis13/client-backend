@@ -5,9 +5,6 @@ const fs = require("fs/promises");
 const PATH_SALES = "../../database/sales.json";
 const PATH_USERS = "../../database/users.json";
 
-const fs = require('fs');
-const path = require('path');
-
 async function registerNewSale(saleFromReq) {
   const { products, ...saleWithoutProducts } = saleFromReq;
   const {
