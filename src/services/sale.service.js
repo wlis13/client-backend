@@ -35,8 +35,7 @@ async function registerNewSale(saleFromReq) {
   };
   dataSales.push(newSale);
 
-  // escreve o conteúdo atualizado do arquivo de vendas
-  await fs.promises.writeFile(fileSales, JSON.stringify(dataSales));
+  await fs.writeFile(fileSales, JSON.stringify(dataSales));
 
   return newSale; // retorna a nova venda adicionada
 }
