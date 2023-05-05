@@ -18,7 +18,7 @@ async function registerNewSale(saleFromReq) {
   } = saleWithoutProducts;
   
   // lê o arquivo de vendas
-  const fileSales = path.join(__dirname, PATH_SALES);
+  const fileSales = path.resolve(__dirname, '..', PATH_SALES);
   const dataSales = JSON.parse(await fs.promises.readFile(fileSales, 'utf-8'));
 
   // adiciona a nova venda no array de vendas
