@@ -1,6 +1,6 @@
 const { getUserById } = require('./user.service');
 const path = require('path');
-const fs = require("fs/promises");
+const fs = require('fs/promises');
 
 const PATH_SALES = "../../database/sales.json";
 const PATH_USERS = "../../database/users.json";
