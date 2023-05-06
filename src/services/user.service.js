@@ -7,7 +7,7 @@ const user = require('../models/users.model');
 const PATH_USERS = "../../database/users.json";
 
 async function loginUserService(userFromReq) {
-  await user.findOne({ email: userFromReq.email });
+  const getUser = await user.findOne({ email: userFromReq.email });
   const token = await generateToken(getUser);
   if (getUser !== null) {
   return { token };
