@@ -7,9 +7,7 @@ const user = require('../models/users.model');
 const PATH_USERS = "../../database/users.json";
 
 async function loginUserService(userFromReq) {
-  const fileUsers = path.join(__dirname, PATH_USERS);
-  const dataUsers = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
-  const getUser = dataUsers.find((user) => user.email === userFromReq.email);
+  const getUser = await user.findOne({ email: userFromReq.email });
   const token = await generateToken(getUser);
   if (getUser !== null) {
   return { ...getUser, token };
