@@ -2,6 +2,7 @@ const { generateToken } = require('../utils/jwt');
 const path = require('path');
 const fs = require('fs/promises');
 const { hashPassword } = require('../utils/crypto');
+const user = require('../models/users.model');
 
 const PATH_USERS = "../../database/users.json";
 
@@ -16,14 +17,8 @@ async function loginUserService(userFromReq) {
 }
 
 async function registerUserService(userFromReq) {
-  const { password } = userFromReq;
-  const passwordHash = hashPassword(password);
-  const fileUsers = path.join(__dirname, PATH_USERS);
-  const createdUser = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
-  const id = createdUser.length + 1
-  createdUser.push({ id, ...userFromReq, password_hash: passwordHash });
-  await fs.writeFile(fileUsers, JSON.stringify(createdUser));
-  return createdUser.find((user) => user.email === userFromReq.email);
+  const insertNewUser = await user.create(userFromReq);
+  return insertNewUser;
 }
 
 async function getAllUserByRole(role) {
