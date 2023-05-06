@@ -29,8 +29,9 @@ mongoose
   .connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.vokq4pn.mongodb.net/`)
   .then(() => {
     console.log('connection start success!');
+    app.listen(port);
   })
   .catch((error) => console.log(error));
 
-  app.listen(port);
+  module.exports = app;
   
