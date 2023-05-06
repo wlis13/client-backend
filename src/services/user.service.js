@@ -15,16 +15,14 @@ async function loginUserService(userFromReq) {
 }
 
 async function registerUserService(userFromReq) {
-  const insertNewUser = await user.create(userFromReq);
+  const passwordHash = hashPassword(userFromReq.password);
+  const insertNewUser = await user.create({ passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
 async function getAllUserByRole(role) {
-  const fileUsers = path.join(__dirname, PATH_USERS);
-  const createdUser = JSON.parse(await fs.readFile(fileUsers, "utf-8"));
-  const rows = createdUser.filter((user) => user.role === role);
-
-  const userList = rows.map((row) => ({
+  const getUserByRole = await user.findOne({ role: role })
+  const userList = getUserByRole.map((row) => ({
     id: row.id,
     name: row.name,
     email: row.email,
@@ -35,9 +33,7 @@ async function getAllUserByRole(role) {
 }
 
 async function getUserByIdService(id) {
-  const filePath = path.join(__dirname, PATH_USERS);
-  const getUsers = JSON.parse(await fs.readFile(filePath, "utf-8"));
-  const userById = getUsers.find((user) => user.id === Number(id));
+  const userById = await user.findById(id);
   return userById;
 }
 
