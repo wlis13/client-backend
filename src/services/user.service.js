@@ -1,10 +1,6 @@
 const { generateToken } = require('../utils/jwt');
-const path = require('path');
-const fs = require('fs/promises');
 const { hashPassword } = require('../utils/crypto');
 const user = require('../models/users.model');
-
-const PATH_USERS = "../../database/users.json";
 
 async function loginUserService(userFromReq) {
   const getUser = await user.findOne({ email: userFromReq.email });
@@ -16,14 +12,16 @@ async function loginUserService(userFromReq) {
 
 async function registerUserService(userFromReq) {
   const passwordHash = hashPassword(userFromReq.password);
-  const insertNewUser = await user.create({ passwordHash, ...userFromReq });
+  const getAllUsers = await user.find();
+  const insertNewUser = await user
+    .create({_id: getAllUsers.length + 1, passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
 async function getAllUserByRole(role) {
   const getUserByRole = await user.findOne({ role: role })
   const userList = getUserByRole.map((row) => ({
-    id: row.id,
+    _id: row._id,
     name: row.name,
     email: row.email,
     role: row.role,
