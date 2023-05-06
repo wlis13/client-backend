@@ -6,10 +6,6 @@ const { userRouter } = require('./routes/user.routes');
 const { productsRoutes } = require('./routes/products.routes');
 const { salesRoutes } = require('./routes/sales.routes');
 
-const dbUser = process.env.DB_USER || 'wlissesfernando285';
-const dbPassword = process.env.DB_PASSWORD || 'app-delivery';
-const port = process.env.PORT;
-
 dotenv.config();
 const app = express();
 app.use(cors({
@@ -25,6 +21,10 @@ app.use('/', salesRoutes);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
 
+const dbUser = process.env.DB_USER || 'wlissesfernando285';
+const dbPassword = process.env.DB_PASSWORD || 'app-delivery';
+const port = process.env.PORT;
+
 mongoose
   .connect(`mongodb+srv://${dbUser}:${dbPassword}@cluster0.vokq4pn.mongodb.net/`)
   .then(() => {
@@ -34,4 +34,3 @@ mongoose
   .catch((error) => console.log(error));
 
   module.exports = app;
-  
