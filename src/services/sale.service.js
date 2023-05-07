@@ -27,17 +27,18 @@ async function registerNewSaleService(saleFromReq) {
     status,
   };
   await sale.create(dataSales);
-  // const dataSaleProduct = await saleProduct.find().exec();
-  // const createNewListSalesProduct = products.map((iten) => {
-  //   const newSaleProcuct = {
-  //     id: dataSaleProduct.length + 1,
-  //     seller_id,
-  //     product_id: iten.producId,
-  //     quantity: iten.quantity,
-  //   }
-  // });
+  const dataSaleProduct = await saleProduct.find().exec();
+  const createNewListSalesProduct = products.map((iten) => {
+    const newSaleProcuct = {
+      id: dataSaleProduct.length + 1,
+      seller_id,
+      product_id: iten.producId,
+      quantity: iten.quantity,
+    }
+    return newSaleProcuct;
+  });
 
-  await saleProduct.create({})
+  await saleProduct.create(createNewListSalesProduct);
 
   return newSale; // retorna a nova venda adicionada
 };
