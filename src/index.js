@@ -11,7 +11,7 @@ const { saleProductsRouter } = require('./routes/saleProducts.routes');
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: ["http://localhost:3000", "https://client-frontend-seven.vercel.app/"],
+  origin: ["http://localhost:3000", "https://client-frontend-seven.vercel.app"],
 }));
 
 app.use(express.json());

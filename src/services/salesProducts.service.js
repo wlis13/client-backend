@@ -1,6 +1,6 @@
-const sale = require('../models/sales.model');
+// const sale = require('../models/sales.model');
 const saleProduct = require('../models/saleProduct.model');
-const product = require('../models/products.model');
+// const product = require('../models/products.model');
 
 // async function findProductsQuantity(id) {
 //   const getSaleBySellerId = await sale.findOne({
@@ -36,6 +36,6 @@ async function deleteProdSaleService() {
 }
 
 module.exports = {
-  findProductsQuantity,
+  // findProductsQuantity,
   deleteProdSaleService,
 };
