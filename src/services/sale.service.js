@@ -61,8 +61,20 @@ async function updateState(status, id) {
   return updateSaleById;
 };
 
+async function deleteAllSaleService() {
+  await sale.deleteMany();
+  return 'toda a venda foram removidas';
+};
+
+async function deleteSaleByIdService(id) {
+  await sale.deleteOne({ id: id });
+  return `a venda com o id: ${id} foi removida`;
+};
+
 module.exports = {
   registerNewSaleService,
   allSaleService,
   updateState,
+  deleteAllSaleService,
+  deleteSaleByIdService,
 };
