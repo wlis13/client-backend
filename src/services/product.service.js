@@ -10,7 +10,19 @@ async function insertProductsService(productsFromReq) {
   return 'produtos inseridos com sucesso!';
 }
 
+async function deleteProductsService() {
+  await product.deleteMany();
+  return 'todos os produtos foram deletados!';
+}
+
+async function deleteOneProductService(id) {
+  await product.deleteOne({ id: id });
+  return `produto com id: ${id} foi removido!`;
+}
+
 module.exports = {
   getAllProductsService,
   insertProductsService,
+  deleteProductsService,
+  deleteOneProductService,
 };
