@@ -26,13 +26,13 @@ async function registerNewSaleService(saleFromReq) {
     sale_date,
     status,
   };
-  await sale.create(dataSales);
+  await sale.create(newSale);
   const dataSaleProduct = await saleProduct.find().exec();
   const createNewListSalesProduct = products.map((iten) => {
     const newSaleProcuct = {
       id: dataSaleProduct.length + 1,
       seller_id,
-      product_id: iten.producId,
+      product_id: iten.productId,
       quantity: iten.quantity,
     }
     return newSaleProcuct;
