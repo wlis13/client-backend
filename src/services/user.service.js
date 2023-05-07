@@ -12,9 +12,9 @@ async function loginUserService(userFromReq) {
 
 async function registerUserService(userFromReq) {
   const password_hash = hashPassword(userFromReq.password);
-  const getAllUsers = user.find().exec();
+  const getAllUsers = await user.find().exec();
   const insertNewUser = await user
-    .create({ id: (await getAllUsers).length + 1, password_hash, ...userFromReq });
+    .create({ id: getAllUsers.length + 1, password_hash, ...userFromReq });
   return insertNewUser;
 }
 
