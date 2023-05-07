@@ -16,7 +16,7 @@ async function registerUserService(userFromReq) {
   const getAllUsers = await user.find();
   const constructorId = getAllUsers.length + 1;
   const insertNewUser = await user
-    .create({_id: constructorId.toString(), passwordHash, ...userFromReq });
+    .insertOne({_id: constructorId.toString(), passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
