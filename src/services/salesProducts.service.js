@@ -8,19 +8,19 @@ async function findProductsQuantity(id) {
   });
    
   const getSaleProductBySale = await saleProduct.findOne({
-    sale_id: getSaleBySellerId._id
+    sale_id: getSaleBySellerId.id
   });
   
   const getProductBySaleProduct = await product.findOne({
-    _id: getSaleProductBySale._id
+    id: getSaleProductBySale.id
   });
 
-  const { _id, total_price, sale_date } = getSaleBySellerId;
+  const { id, total_price, sale_date } = getSaleBySellerId;
   const { quantity } = getSaleProductBySale;
   const { name, price } = getProductBySaleProduct;
 
   const results = {
-    _id,
+    id,
     total_price,
     sale_date,
     name,

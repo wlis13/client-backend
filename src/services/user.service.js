@@ -35,6 +35,11 @@ async function getUserByIdService(id) {
   return userById;
 }
 
+async function getAllSellersService() {
+  const getSellers = await user.find({ role: "seller" }).exec();
+  return getSellers;
+}
+
 async function deleteUserById(id) {
   await user.deleteOne({ id: id });
   return `usuário com id: ${id} foi deletado!`;
@@ -50,6 +55,7 @@ module.exports = {
   registerUserService,
   getAllUserByRole,
   getUserByIdService,
+  getAllSellersService,
   deleteAllUsers,
   deleteUserById,
 };
