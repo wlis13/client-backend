@@ -13,10 +13,8 @@ async function loginUserService(userFromReq) {
 
 async function registerUserService(userFromReq) {
   const passwordHash = hashPassword(userFromReq.password);
-  const getAllUsers = await user.find();
-  const constructorId = getAllUsers.length + 1;
   const insertNewUser = await user
-    .insertOne({_id: constructorId.toString(), passwordHash, ...userFromReq });
+    .insertOne({ passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
