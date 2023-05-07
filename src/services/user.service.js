@@ -14,9 +14,9 @@ async function loginUserService(userFromReq) {
 async function registerUserService(userFromReq) {
   const passwordHash = hashPassword(userFromReq.password);
   const getAllUsers = await user.find();
-  const constructorId = mongoose.Types.ObjectId(getAllUsers.length + 1)
+  const constructorId = getAllUsers.length + 1;
   const insertNewUser = await user
-    .create({_id: constructorId, passwordHash, ...userFromReq });
+    .create({_id: constructorId.toString(), passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
@@ -33,7 +33,7 @@ async function getAllUserByRole(role) {
 }
 
 async function getUserByIdService(id) {
-  const userById = await user.findById(mongoose.Types.ObjectId(id));
+  const userById = await user.findById(id);
   return userById;
 }
 
