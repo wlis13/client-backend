@@ -13,7 +13,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/images', express.static(`${__dirname}/images`));
+app.use('/src/images', express.static(`${__dirname}/images`));
 
 app.use('/', userRouter);
 app.use('/', productsRoutes);

@@ -5,6 +5,12 @@ async function getAllProductsService() {
   return products;
 };
 
+async function insertProductsService(productsFromReq) {
+  await product.insertMany(productsFromReq);
+  return 'produtos inseridos com sucesso!';
+}
+
 module.exports = {
   getAllProductsService,
+  insertProductsService,
 };
