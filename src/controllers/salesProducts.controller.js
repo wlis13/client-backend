@@ -6,12 +6,12 @@ async function salesProductsController(req, res) {
   res.status(200).json(result);
 };
 
-async function deleteProdSaleController(req, res) {
+async function deleteProdSaleController(_req, res) {
   const deletedProdSale = await deleteProdSaleService();
   res.status(204).json(deletedProdSale);
 };
 
 module.exports = {
-  salesProducts,
+  salesProductsController,
   deleteProdSaleController,
 };
