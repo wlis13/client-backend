@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const sale = mongoose.model('sale', {
+  id: Number,
   user_id: Number,
   seller_id: Number,
   total_price: Number,
