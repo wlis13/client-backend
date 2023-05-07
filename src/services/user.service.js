@@ -14,8 +14,9 @@ async function loginUserService(userFromReq) {
 async function registerUserService(userFromReq) {
   const passwordHash = hashPassword(userFromReq.password);
   const getAllUsers = await user.find();
+  const constructorId = mongoose.Types.ObjectId(getAllUsers.length + 1)
   const insertNewUser = await user
-    .create({_id: getAllUsers.length + 1, passwordHash, ...userFromReq });
+    .create({_id: constructorId, passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
