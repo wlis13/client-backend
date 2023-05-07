@@ -10,8 +10,8 @@ const productsRoutes = Router();
 
 productsRoutes.get("/products", allProductController);
 productsRoutes.post("/insert/products", insertProductsController);
-productsRoutes.put("/delete/products", deleteProductsController);
-productsRoutes.put("/delete/one/product", deleteOneProductController);
+productsRoutes.delete("/delete/products", deleteProductsController);
+productsRoutes.delete("/delete/product/:id", deleteOneProductController);
 
 module.exports = {
   productsRoutes,

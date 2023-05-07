@@ -12,13 +12,13 @@ async function insertProductsController(req, res) {
 
 async function deleteProductsController(_req, res) {
   const deletedProducts = await deleteProductsService();
-  res.status(201).json(deletedProducts);
+  res.status(204).json(deletedProducts);
 };
 
 async function deleteOneProductController(req, res) {
   const { id } = req.params;
   const deletedOneProduct = await deleteOneProductService(id);
-  res.status(201).json(deletedOneProduct);
+  res.status(204).json(deletedOneProduct);
 };
 
 module.exports = {
