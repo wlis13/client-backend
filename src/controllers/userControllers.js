@@ -3,6 +3,8 @@ const {
   loginUserService,
   registerUserService,
   getUserByIdService,
+  deleteAllUsers,
+  deleteUserById,
 } = require('../services/user.service');
 
 async function loginContoller(req, res) {
@@ -29,9 +31,22 @@ async function userByIdController(req, res) {
   return res.status(200).json(user);
 }
 
+async function deleteAllUsersController(_req, res) {
+  const messageDeleteUser = await deleteAllUsers();
+  res.status(204).json({ messageDeleteUser });
+}
+
+async function deleteUserByIdController(req, res) {
+  const { id } = req.params;
+  const messageDeleteUserById = await deleteUserById(id);
+  res.status(204).json(messageDeleteUserById);
+}
+
 module.exports = {
   loginContoller,
   userRegisterController,
   allUserByRoleController,
   userByIdController,
+  deleteAllUsersController,
+  deleteUserByIdController,
 };

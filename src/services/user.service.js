@@ -36,9 +36,21 @@ async function getUserByIdService(id) {
   return userById;
 }
 
+async function deleteUserById(id) {
+  await user.deleteOne({ _id: id });
+  return `usuário com id: ${id} foi deletado!`;
+}
+
+async function deleteAllUsers() {
+  await user.deleteMany();
+  return 'todos os usuários foram deletados!';
+}
+
 module.exports = {
   loginUserService,
   registerUserService,
   getAllUserByRole,
   getUserByIdService,
+  deleteAllUsers,
+  deleteUserById,
 };
