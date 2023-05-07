@@ -1,8 +1,12 @@
-const { registerNewSale, allSaleService, updateState } = require('../services/sale.service');
+const { 
+  allSaleService, 
+  updateState, 
+  registerNewSaleService,
+ } = require('../services/sale.service');
 
 async function registerNewSaleController(req, res) {
   const saleToRegister = req.body;
-  const createdSale = await registerNewSale(saleToRegister);
+  const createdSale = await registerNewSaleService(saleToRegister);
   return res.status(201).json(createdSale);
 }
 

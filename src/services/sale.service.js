@@ -1,7 +1,7 @@
 const sale = require('../models/sales.model');
 const user = require('../models/users.model');
 
-async function registerNewSale(saleFromReq) {
+async function registerNewSaleService(saleFromReq) {
   const { products, ...saleWithoutProducts } = saleFromReq;
   const {
     userId,
@@ -13,13 +13,11 @@ async function registerNewSale(saleFromReq) {
     status,
   } = saleWithoutProducts;
   
-  // // lê o arquivo de vendas
-  // const fileSales = path.join(__dirname, PATH_SALES);
-  // const dataSales = JSON.parse(await fs.readFile(fileSales, 'utf-8'));
-
-  // // adiciona a nova venda no array de vendas
+  // lê o arquivo de vendas
+  const dataSales = await sale.find().exec();
+  // adiciona a nova venda no array de vendas
   const newSale = {
-    _id: dataSales.length + 1, // gera o ID da nova venda
+    id: dataSales.length + 1, // gera o ID da nova venda
     userId,
     sellerId,
     totalPrice,
@@ -32,22 +30,22 @@ async function registerNewSale(saleFromReq) {
   // dataSales.push(newSale);
 
   // await fs.writeFile(fileSales, JSON.stringify(dataSales));
+  await sale.create(dataSales);
 
-  // return newSale; // retorna a nova venda adicionada
+  return newSale; // retorna a nova venda adicionada
 }
 
 
 
 async function allSaleService(id) {
-  const user = await user.findById(id);
+  const User = await user.findById(id);
 
-  if (user.role === 'seller') {
+  if (User.role === 'seller') {
     const getSaleById = await sale.findById(id);
     return getSaleById;
   } else {
     const getSaleById = await sale.findById(id);
-    const getUserBySaleId = await user.findById(getSaleById.id)
-    const { name } = getUserBySaleId;
+    const { name } = await user.findById(getSaleById.id)
     return { ...getSaleById, name };
   }
 }
@@ -58,7 +56,7 @@ async function updateState(status, id) {
 }
 
 module.exports = {
-  registerNewSale,
+  registerNewSaleService,
   allSaleService,
   updateState,
 };
