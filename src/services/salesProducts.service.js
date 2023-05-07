@@ -30,6 +30,12 @@ async function findProductsQuantity(id) {
   return results;
 }
 
+async function deleteProdSaleService() {
+  await saleProduct.deleteMany();
+  return 'dados deletados com sucesso!';
+}
+
 module.exports = {
   findProductsQuantity,
+  deleteProdSaleService,
 };
