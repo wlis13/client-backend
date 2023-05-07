@@ -6,7 +6,7 @@ async function loginUserService(userFromReq) {
   const getUser = await user.findOne({ email: userFromReq.email });
   const token = await generateToken(getUser);
   if (getUser !== null) {
-  return { token };
+  return { ...getUser, token };
   }
 }
 
@@ -21,7 +21,7 @@ async function registerUserService(userFromReq) {
 async function getAllUserByRole(role) {
   const getUserByRole = await user.find({ role: role }).exec();
   const userList = getUserByRole.map((row) => ({
-    _id: row._id,
+    id: row.id,
     name: row.name,
     email: row.email,
     role: row.role,
@@ -36,7 +36,7 @@ async function getUserByIdService(id) {
 }
 
 async function deleteUserById(id) {
-  await user.deleteOne({ _id: id });
+  await user.deleteOne({ id: id });
   return `usuário com id: ${id} foi deletado!`;
 }
 
