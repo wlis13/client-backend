@@ -14,7 +14,7 @@ async function loginUserService(userFromReq) {
 async function registerUserService(userFromReq) {
   const passwordHash = hashPassword(userFromReq.password);
   const insertNewUser = await user
-    .insertOne({ passwordHash, ...userFromReq });
+    .create({ passwordHash, ...userFromReq });
   return insertNewUser;
 }
 
