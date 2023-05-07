@@ -1,6 +1,7 @@
 const { generateToken } = require('../utils/jwt');
 const { hashPassword } = require('../utils/crypto');
 const user = require('../models/users.model');
+const mongoose = require('mongoose');
 
 async function loginUserService(userFromReq) {
   const getUser = await user.findOne({ email: userFromReq.email });
@@ -31,7 +32,7 @@ async function getAllUserByRole(role) {
 }
 
 async function getUserByIdService(id) {
-  const userById = await user.findById(id);
+  const userById = await user.findById(mongoose.Types.ObjectId(id));
   return userById;
 }
 
