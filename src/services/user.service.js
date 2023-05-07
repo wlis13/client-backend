@@ -1,7 +1,6 @@
 const { generateToken } = require('../utils/jwt');
 const { hashPassword } = require('../utils/crypto');
 const user = require('../models/users.model');
-const mongoose = require('mongoose');
 
 async function loginUserService(userFromReq) {
   const getUser = await user.findOne({ email: userFromReq.email });
@@ -13,14 +12,14 @@ async function loginUserService(userFromReq) {
 
 async function registerUserService(userFromReq) {
   const password_hash = hashPassword(userFromReq.password);
-  const getAllUsers = user.find();
+  const getAllUsers = user.find().exec();
   const insertNewUser = await user
-    .create({ id: getAllUsers.lenght + 1, password_hash, ...userFromReq });
+    .create({ id: (await getAllUsers).length + 1, password_hash, ...userFromReq });
   return insertNewUser;
 }
 
 async function getAllUserByRole(role) {
-  const getUserByRole = await user.findOne({ role: role })
+  const getUserByRole = await user.find({ role: role }).exec();
   const userList = getUserByRole.map((row) => ({
     _id: row._id,
     name: row.name,
