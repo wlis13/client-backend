@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { userRouter } = require('./routes/user.routes');
 const { productsRoutes } = require('./routes/products.routes');
 const { salesRoutes } = require('./routes/sales.routes');
+const { detailsRouter } = require('./routes/detailsUser.routes');
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.use('/images', express.static(`${__dirname}/images`));
 app.use('/', userRouter);
 app.use('/', productsRoutes);
 app.use('/', salesRoutes);
+app.use('/', detailsRouter);
 // app.use('/', adminRouter);
 // app.use('/', saleRouter);
 
