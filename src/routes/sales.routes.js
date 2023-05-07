@@ -3,7 +3,7 @@ const { registerNewSaleController } = require('../controllers/sale.controller');
 
 const salesRoutes = Router();
 
-salesRoutes.post('/sale', registerNewSaleController);
+salesRoutes.post('/register/sale', registerNewSaleController);
 
 module.exports = {
   salesRoutes,
